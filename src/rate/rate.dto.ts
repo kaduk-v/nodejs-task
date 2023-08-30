@@ -1,7 +1,7 @@
 import configuration from '@/config/configuration';
 import { ApiProperty } from "@nestjs/swagger";
 import { ConfigService } from "@nestjs/config";
-import { IsIn, IsNotEmpty, IsString } from "class-validator";
+import { IsIn, IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { Transform } from "class-transformer";
 import { RateRange } from "@/rate/rate.interface";
 
@@ -15,7 +15,7 @@ export class BaseRateFilterDto {
         example: 'BTCUSDT'
     })
     @IsNotEmpty({ message: "Required parameter 'symbol' is not provided" })
-    @IsIn(configService.get('symbolWhitelist'), { message: 'Not supported trading list' })
+    @IsIn(configService.get('symbolWhitelist'), { message: 'Not supported trading symbol' })
     symbol: string;
 }
 
@@ -30,7 +30,8 @@ export class HistoryRateFilterDto extends BaseRateFilterDto {
         example: RateRange.OneWeek,
         default: RateRange.OneDay
     })
-    range: RateRange
+    @IsOptional()
+    range: RateRange = RateRange.OneDay;
 }
 
 export class RatePointDto {
