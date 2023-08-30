@@ -1,9 +1,10 @@
 import { Controller, Get } from '@nestjs/common';
 import { ConfigService } from "@nestjs/config";
-import { ApiOperation } from "@nestjs/swagger";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AppHelth } from "@/app.interface";
 
 @Controller()
+@ApiTags('App')
 export class AppController {
     constructor(private configService: ConfigService) {}
 

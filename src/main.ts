@@ -3,6 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { AppModule } from '@/app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { OpenAPIObject, SwaggerCustomOptions, SwaggerDocumentOptions } from "@nestjs/swagger/dist/interfaces";
+import { ValidationPipe } from "@nestjs/common";
 
 const config: Omit<OpenAPIObject, 'paths'> = new DocumentBuilder().setTitle('API').setDescription('API description').setVersion('1.0').build();
 const options: SwaggerCustomOptions = {
@@ -18,9 +19,11 @@ async function bootstrap() {
     const appService = app.get(ConfigService);
 
     app.setGlobalPrefix('api');
+    app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api', app, document, options);
+    SwaggerModule.setup('api/swagger', app, document, options);
+
 
     await app.listen(appService.get('port'));
 }
