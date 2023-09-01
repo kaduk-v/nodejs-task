@@ -10,33 +10,24 @@ export class RateController {
     }
 
     @Get('current')
-    @ApiOperation({ summary: 'Get current trading rate' })
+    @ApiOperation({ summary: 'Latest rate for a symbol' })
     @ApiOkResponse({ type: CurrentRateDto })
     async getCurrentRate(@Query() filter: CurrentRateFilterDto) {
-        return {
-            symbol: 'BTCUSDT',
-            timestamp: 23523523523,
-            rate: 25235235.22355
+        try {
+            return await this.rateService.findSymbolCurrentRate(filter);
+        } catch (e) {
+            throw new BadRequestException(e.message);
         }
     }
 
     @Get('history')
-    @ApiOperation({ summary: 'Get history trading rates' })
+    @ApiOperation({ summary: 'History rates for a symbol' })
     @ApiOkResponse({ type: HistoryRateDto })
     async getHistoryRates(@Query() filter: HistoryRateFilterDto) {
-        return {
-            symbol: 'BTCUSDT',
-            points: [
-                {
-                    timestamp: 1692817200,
-                    rate: 26491.415888
-                },
-                {
-                    timestamp: 1692820800,
-                    rate: 26670.544025
-                },
-            ]
+        try {
+            return await this.rateService.findHistoryRates(filter);
+        } catch (e) {
+            throw new BadRequestException(e.message);
         }
     }
-
 }

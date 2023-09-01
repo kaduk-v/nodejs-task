@@ -3,7 +3,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ConfigService } from "@nestjs/config";
 import { IsIn, IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { Transform } from "class-transformer";
-import { RateRange } from "@/rate/rate.interface";
+import { DateRange } from "@/common/time.helper";
 
 const configService: ConfigService = new ConfigService(configuration());
 
@@ -24,14 +24,14 @@ export class CurrentRateFilterDto extends BaseRateFilterDto {
 
 export class HistoryRateFilterDto extends BaseRateFilterDto {
     @ApiProperty({
-        enum: [ RateRange.OneDay, RateRange.OneWeek, RateRange.TwoWeeks, RateRange.OneMonth ],
+        enum: [ DateRange.OneDay, DateRange.OneWeek, DateRange.TwoWeeks, DateRange.OneMonth ],
         name: 'range',
         description: 'Filter by a certain date range',
-        example: RateRange.OneWeek,
-        default: RateRange.OneDay
+        example: DateRange.OneWeek,
+        default: DateRange.OneDay
     })
     @IsOptional()
-    range: RateRange = RateRange.OneDay;
+    range: DateRange = DateRange.OneDay;
 }
 
 export class RatePointDto {

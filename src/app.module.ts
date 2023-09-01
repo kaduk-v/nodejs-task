@@ -6,8 +6,7 @@ import { RateController } from "@/rate/rate.controller";
 import { RateModule } from "@/rate/rate.module";
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from "@/user/user.module";
-
-const configService: ConfigService = new ConfigService(configuration());
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
     imports: [
@@ -20,6 +19,7 @@ const configService: ConfigService = new ConfigService(configuration());
             inject: [ ConfigService ],
             useFactory: (configService: ConfigService) => (configService.get('database'))
         }),
+        ScheduleModule.forRoot(),
         UserModule,
         RateModule
     ],
