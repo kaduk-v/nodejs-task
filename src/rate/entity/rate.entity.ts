@@ -21,7 +21,7 @@ export class Rate {
     symbol: TradeSymbol;
 
     @Column({ type: 'float' })
-    rate: number;
+    price: number;
 
     @Column({ type: 'integer' })
     hourIndex: number;

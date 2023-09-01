@@ -59,7 +59,7 @@ export class RateService {
         const rate: Rate = await this.rateRepository
             .createQueryBuilder('r')
             .leftJoinAndSelect('r.symbol', 's')
-            .select([ 's.name', 'r.rate', 'r.timestamp' ])
+            .select([ 's.name', 'r.price', 'r.timestamp' ])
             .where('s.name = :name', { name: filter.symbol })
             .orderBy('r.updatedAt', 'DESC')
             .getOne();
@@ -72,7 +72,7 @@ export class RateService {
 
         currentRate.symbol = rate.symbol.name;
         currentRate.timestamp = rate.timestamp;
-        currentRate.rate = rate.rate;
+        currentRate.price = rate.price;
 
         return currentRate;
     }
@@ -81,7 +81,7 @@ export class RateService {
         const symbol = await this.symbolRepository
             .createQueryBuilder('s')
             .leftJoinAndSelect('s.rates', 'r')
-            .select([ 's.name', 'r.rate', 'r.timestamp' ])
+            .select([ 's.name', 'r.price', 'r.timestamp' ])
             .where('s.name = :name AND r.timestamp > :timestamp', {
                 name: filter.symbol,
                 timestamp: getTimestampByDateRane(filter.range)
@@ -99,7 +99,7 @@ export class RateService {
         historyRates.points = symbol.rates.map(rate => {
             const point = new RatePointDto();
 
-            point.rate = rate.rate;
+            point.price = rate.price;
             point.timestamp = rate.timestamp;
 
             return point;

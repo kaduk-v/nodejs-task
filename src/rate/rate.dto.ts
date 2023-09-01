@@ -46,12 +46,12 @@ export class RatePointDto {
 
     @ApiProperty({
         type: Number,
-        name: 'rate',
+        name: 'price',
         description: 'Token price',
         example: 26670.544025
     })
     @Transform(({ value }) => Number(value))
-    rate: number;
+    price: number;
 }
 
 export class CurrentRateDto extends RatePointDto {
@@ -79,7 +79,7 @@ export class HistoryRateDto {
     @ApiProperty({
         type: [ RatePointDto ],
         name: 'points',
-        description: 'List of rate points',
+        description: 'List of price points',
         required: true
     })
     points: RatePointDto[]
