@@ -20,14 +20,24 @@ $ yarn install
 ## Running the app
 
 ```bash
-# development
-$ yarn run start
-
-# watch mode
+# development watch mode
 $ yarn run start:dev
 
 # production mode
+$ yarn run build
 $ yarn run start:prod
+```
+
+## API
+```bash
+# app endpopints
+http://localhost:3000/api/swagger
+
+headers: {
+  Authorization: "Bearer token"
+}
+
+# to get Bearer token needs to register a new user and sign in at first
 ```
 
 ## Test
@@ -42,3 +52,5 @@ $ yarn run test:e2e
 # test coverage
 $ yarn run test:cov
 ```
+
+

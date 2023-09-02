@@ -7,7 +7,7 @@ export class TradeSymbol {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ type: 'varchar' })
+    @Column({ type: 'varchar', unique: true })
     name: string;
 
     @OneToMany(

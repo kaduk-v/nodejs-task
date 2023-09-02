@@ -8,7 +8,7 @@ import { ValidationPipe } from "@nestjs/common";
 const config: Omit<OpenAPIObject, 'paths'> = new DocumentBuilder()
     .addBearerAuth()
     .setTitle('API')
-    .setDescription('API description')
+    .setDescription('App which fetches and stores the symbol prices from Binance API')
     .setVersion('1.0')
     .build();
 

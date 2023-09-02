@@ -29,6 +29,8 @@ export class RateService {
     ) {
         this.apiBaseUrl = this.config.get('binance')['baseEndpoints'][0];
         this.apiPriceEndpoint = this.config.get('binance')['priceEndpoint'];
+
+        this.addSymbols().then();
     }
 
     @Cron(CronExpression.EVERY_MINUTE)
@@ -157,5 +159,17 @@ export class RateService {
         } catch (e) {
             console.error('Cannot update rates.', e.message);
         }
+    }
+
+    private async addSymbols() {
+        const data = this.config.get('symbolsWhitelist').map(name => ({ name }));
+
+        await this.symbolRepository
+            .createQueryBuilder()
+            .insert()
+            .into(TradeSymbol)
+            .values(data)
+            .onConflict(`("name") DO NOTHING`)
+            .execute();
     }
 }
