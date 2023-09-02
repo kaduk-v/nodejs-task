@@ -7,6 +7,7 @@ import { RateModule } from "@/rate/rate.module";
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from "@/user/user.module";
 import { ScheduleModule } from '@nestjs/schedule';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
@@ -15,13 +16,13 @@ import { ScheduleModule } from '@nestjs/schedule';
             load: [ configuration ]
         }),
         TypeOrmModule.forRootAsync({
-            imports: [ ConfigModule ],
             inject: [ ConfigService ],
-            useFactory: (configService: ConfigService) => (configService.get('database'))
+            useFactory: (config: ConfigService) => (config.get('database'))
         }),
         ScheduleModule.forRoot(),
         UserModule,
-        RateModule
+        RateModule,
+        AuthModule
     ],
     controllers: [ AppController ],
     providers: [],

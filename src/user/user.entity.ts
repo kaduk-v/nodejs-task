@@ -7,14 +7,14 @@ export class User {
     id: number;
 
     @Column()
-    firstName: string;
+    name: string;
 
     @Column()
-    lastName: string;
+    password: string;
 
-    @Column({ default: true })
-    isActive: boolean;
+    @Column({ unique: true })
+    email: string;
 
-    @CreateDateColumn({ type: "date", default: () => 'NOW()' })
-    createdAt?: Date;
+    @Column()
+    ip: string;
 }

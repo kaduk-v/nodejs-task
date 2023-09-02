@@ -123,18 +123,18 @@ export class RateService {
         const currentTimestamp = Date.now() / 1000;
         const hourIndex = ~~(currentTimestamp / UnixTimestamp.OneHour);
         const hourStarUnix = hourIndex * UnixTimestamp.OneHour;
-        const data = [];
+        const data: Omit<Rate, 'id' | 'createdAt' | 'updatedAt'>[] = [];
 
         for (const symbol of symbols) {
-            const rate = prices.find(price => price.symbol === symbol.name).price;
+            const price = prices.find(price => price.symbol === symbol.name).price;
 
-            if (!rate) {
+            if (!price) {
                 console.error(`Cannot find price for symbol - ${symbol.name}`);
                 continue;
             }
 
             data.push({
-                rate: parseFloat(rate),
+                price: parseFloat(price),
                 timestamp: hourStarUnix,
                 hourIndex: hourIndex,
                 symbol
@@ -148,12 +148,12 @@ export class RateService {
                 .into(Rate)
                 .values(data)
                 .orUpdate(
-                    [ "rate", "updatedAt" ],
+                    [ "price", "updatedAt" ],
                     [ "symbolId", "hourIndex" ]
                 )
                 .execute();
 
-            data.map(item => console.log(`[Updated] ${item['symbol'].name} - ${item['rate']}`))
+            data.map(item => console.log(`[Updated] ${item['symbol'].name} - ${item['price']}`))
         } catch (e) {
             console.error('Cannot update rates.', e.message);
         }

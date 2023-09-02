@@ -12,7 +12,7 @@ export default () => ({
         database: process.env.POSTGRES_DATABASE || 'test',
         entities: [],
         autoLoadEntities: true,
-        synchronize: true,
+        synchronize: true, // !!! shouldn't be used in production !!!
     },
     binance: {
         priceEndpoint: '/api/v3/ticker/price',
@@ -25,5 +25,9 @@ export default () => ({
             'https://api4.binance.com'
         ]
     },
-    symbolsWhitelist: [ 'BTCUSDT', 'BNBUSDT' ]
+    symbolsWhitelist: [ 'BTCUSDT', 'BNBUSDT' ],
+    jwt: {
+        secretKey: process.env.JWT_SECRET || 'my_jwt_secret_key',
+        expiresIn: '3d',
+    }
 });

@@ -8,20 +8,4 @@ export class UserController {
     constructor(private service: UserService) {
     }
 
-    @Get('all')
-    async test2() {
-        return await this.service.findAll();
-    }
-
-    @Get('create')
-    async test() {
-        try {
-            const user = await this.service.create();
-            console.log('LOG: ', user)
-
-            return user;
-        } catch (e) {
-            console.log('LOG: ', e)
-        }
-    }
 }
