@@ -38,7 +38,7 @@ export class AuthController {
     @ApiBody({ type: SignInDto })
     @ApiOkResponse({ type: SignedInDto })
     @Post('login')
-    signIn(@Body() signInDto: SignInDto) {
+    async signIn(@Body() signInDto: SignInDto) {
         const { username, password } = signInDto;
 
         return this.authService.signIn(username, password);
