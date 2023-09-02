@@ -1,8 +1,11 @@
-import { ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { BadRequestException, Controller, Get, Query } from "@nestjs/common";
+import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { BadRequestException, Controller, Get, Query, UseGuards } from "@nestjs/common";
 import { HistoryRateFilterDto, CurrentRateFilterDto, CurrentRateDto, HistoryRateDto } from "@/rate/rate.dto";
 import { RateService } from "@/rate/rate.service";
+import { AuthGuard } from "@/auth/auth.guard";
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @Controller('rate')
 @ApiTags('Rate')
 export class RateController {

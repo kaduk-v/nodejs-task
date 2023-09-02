@@ -28,6 +28,6 @@ export default () => ({
     symbolsWhitelist: [ 'BTCUSDT', 'BNBUSDT' ],
     jwt: {
         secretKey: process.env.JWT_SECRET || 'my_jwt_secret_key',
-        expiresIn: '3d',
+        expiresIn: '1h',
     }
 });

@@ -1,9 +1,20 @@
-import { BadRequestException, Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { ApiBody, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import {
+    BadRequestException,
+    Body,
+    Controller,
+    Get,
+    HttpCode,
+    HttpStatus,
+    Post,
+    Request,
+    UseGuards
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { CreateUserDto, SignedInDto, SignInDto } from "@/auth/auth.dto";
 import { AuthService } from "@/auth/auth.service";
 import { RealIP } from "nestjs-real-ip";
 import { UserService } from "@/user/user.service";
+import { AuthGuard } from "@/auth/auth.guard";
 
 @Controller('auth')
 @ApiTags('Authentication')
@@ -44,4 +55,10 @@ export class AuthController {
         return this.authService.signIn(username, password);
     }
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @Get('profile')
+    getProfile(@Request() req) {
+        return req.user;
+    }
 }

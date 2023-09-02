@@ -5,7 +5,13 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { OpenAPIObject, SwaggerCustomOptions, SwaggerDocumentOptions } from "@nestjs/swagger/dist/interfaces";
 import { ValidationPipe } from "@nestjs/common";
 
-const config: Omit<OpenAPIObject, 'paths'> = new DocumentBuilder().setTitle('API').setDescription('API description').setVersion('1.0').build();
+const config: Omit<OpenAPIObject, 'paths'> = new DocumentBuilder()
+    .addBearerAuth()
+    .setTitle('API')
+    .setDescription('API description')
+    .setVersion('1.0')
+    .build();
+
 const options: SwaggerCustomOptions = {
     swaggerOptions: {
         apisSorter: 'alpha',
